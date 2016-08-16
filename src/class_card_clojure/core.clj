@@ -24,11 +24,11 @@
                                card3 (disj deck card1 card2)
                                card4 (disj deck card1 card2 card3)]
                               #{card1 card2 card3 card4})))
-;hand ex:
-;#{{:suit :spades, :rank 6}
-;{:suit :hearts, :rank 11}
-;{:suit :diamonds, :rank 11}
-;{:suit :diamonds, :rank 13}}
+                              ;hand ex: 
+                              ;#{{:suit :spades, :rank 6} 
+                              ;{:suit :hearts, :rank 11} 
+                              ;{:suit :diamonds, :rank 11} 
+                              ;{:suit :diamonds, :rank 13}}
 
 (def global-deck (create-deck))
 
@@ -75,7 +75,7 @@
 (defn in-a-sequence?
   [hand]
   (let [ranks (sort-ranks hand)]
-    (if-not (= 4 (count ranks))
+    (if (= 4 (count ranks))
       (apply = 1 (map - (rest ranks) ranks))
       false)))
 
@@ -84,12 +84,12 @@
 (defn straight?
   "returns true if given cards' ranks are in sequence but not in same suit"
   [hand]
-  (and (in-a-sequence? hand)
+  (and (in-a-sequence? hand) 
        (not (same-suit? hand))))
-
+  
 ;returns true if all given cards of same suit, in sequence
 (defn straight-flush? [hand]
-  (and (= (in-a-sequence? hand) true)) (= (same-suit? hand) true) (<= 10 (first (sort-ranks hand))))
+  (and (= (in-a-sequence? hand) true) (= (same-suit? hand) true) (>= 10 (first (sort-ranks hand)))))
 
 
 ;returns true if only 3 of given cards have the same rank
@@ -107,8 +107,8 @@
   (and (= 2 (count (distinct (get-ranks hand)))) (not= 3 (some #{3} (vals (frequencies (get-ranks hand)))))))
 
 
-
-
+ 
+  
 
 (defn -main []
   (let [deck (create-deck)
@@ -119,7 +119,7 @@
         straight (filter straight? hands)
         two-pair (filter two-pair? hands)
         flush (filter same-suit? hands)]
-
+    
     (println (count four-kind))
     (println (count straight-flush))
     (println (count three-kind))
